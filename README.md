@@ -10,7 +10,7 @@ It specifically target the [OpenILLink UNIGE instance](https://bibliotool.unige.
 
 ## Run it
 
-From the command line (e.:
+From the command line:
 
 ```cmd
  > openillink.invoicegenerator.exe --help
@@ -19,10 +19,10 @@ From the command line (e.:
 ## Parameters
 
 short|long|required|description|default
------|----|---|---|---|---
--i | --input | true | Input file to be processed.
-   | --from  | false| From date (format yyyy-mm-dd)|0001-01-01
-   |  --to   | false| To date (format yyyy-mm-dd)|Today
+---|---|---|---|---
+-i|--input|:heavy_check_mark:|Input file to be processed.|
+||--from|:x:|From date (format yyyy-mm-dd)|0001-01-01
+| |--to|:x:|To date (format yyyy-mm-dd)|Today
 
 ## Quick Start Examples
 
