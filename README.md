@@ -18,11 +18,11 @@ From the command line (e.:
 
 ## Parameters
 
-|short|long|required|description|default
-|---|---|---|---|---|---
-|-i | --input | true | Input file to be processed.|
-|   | --from  | false| From date (format yyyy-mm-dd)|0001-01-01
-|   |  --to   | false| To date (format yyyy-mm-dd)|Today
+short|long|required|description|default
+-----|----|---|---|---|---
+-i | --input | true | Input file to be processed.
+   | --from  | false| From date (format yyyy-mm-dd)|0001-01-01
+   |  --to   | false| To date (format yyyy-mm-dd)|Today
 
 ## Quick Start Examples
 
@@ -47,6 +47,6 @@ Generate for orders until 31 december 2017:
 
 Generate for orders from 1st of January 2017 to 31 of December 2017:
 
-```
+```cmd
  > openillink.invoicegenerator.exe -i openillink.csv --from 2017-01-01 --to 2017-12-31
 ```
