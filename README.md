@@ -6,7 +6,7 @@ It specifically target the [OpenILLink UNIGE instance](https://bibliotool.unige.
 
 ## Requirements
 
-.NET Framework 4.6
+.NET Core 2.0
 
 ## Run it
 

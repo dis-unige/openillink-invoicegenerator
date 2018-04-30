@@ -1,9 +1,11 @@
 ﻿using ClosedXML.Excel;
-using FileHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Openillink.InvoiceGenerator.Models;
+using System.IO;
+using CsvHelper;
+using CsvHelper.TypeConversion;
 
 namespace Openillink.InvoiceGenerator
 {
@@ -18,13 +20,30 @@ namespace Openillink.InvoiceGenerator
                 var endDate = options.EndDate;
                 var data = ReadData(options.InputFile, startDate, endDate);
 
-                foreach (var group in data.GroupBy(d => d.InvoiceGroup))
+                foreach (var group in data.GroupBy(d => d.InvoiceGroup, StringComparer.InvariantCultureIgnoreCase))
                 {
                     var filename = string.Format("{0}_{1:yyyyMMdd}_{2:yyyyMMdd}.xlsx", group.Key, startDate, endDate);
                     CreateWorkbook(filename, group.Key, group.ToList(), startDate, endDate);
                 }
 
                 Console.WriteLine("Done...");
+            }
+            catch (TypeConverterException tcex)
+            {
+                var color = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("An error occured!");
+                Console.WriteLine(tcex.Message);
+                Console.WriteLine($"    Source: Row {tcex.ReadingContext.Row} (Raw: {tcex.ReadingContext.RawRow}), Column: {tcex.ReadingContext.CurrentIndex}, Header: {tcex.ReadingContext.NamedIndexes.First(ni => ni.Value.Any(v => v == tcex.ReadingContext.CurrentIndex)).Key}.");
+                Console.ForegroundColor = color;
+            }
+            catch (ValidationException vex)
+            {
+                var color = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Validation failed!");
+                Console.WriteLine($"    Source: Row {vex.ReadingContext.Row} (Raw: {vex.ReadingContext.RawRow}), Column: {vex.ReadingContext.CurrentIndex}, Header: {vex.ReadingContext.NamedIndexes.First(ni => ni.Value.Any(v => v == vex.ReadingContext.CurrentIndex)).Key}.");
+                Console.ForegroundColor = color;
             }
             catch (Exception ex)
             {
@@ -38,25 +57,39 @@ namespace Openillink.InvoiceGenerator
 
         private static IList<Order> ReadData(string file, DateTime startDate, DateTime endDate)
         {
-            var engine = new FileHelperEngine<Order>();
-            var records = engine.ReadFile(file)
-                                .Where(r => r.SendDate >= startDate && r.SendDate <= endDate).ToList();
-
-            var replaceByArve = new[] { "BFS", "Anthropologie", "CUI", "Math", "ISE" };
-
-            foreach (var item in records)
+            using (var reader = new StreamReader(file))
             {
-                if (item.Localisation == "BFM")
+                // Skip to lines 3...
+                for (int i = 0; i < 2; i++)
                 {
-                    item.Localisation = "CMU";
+                    reader.ReadLine();
                 }
-                else if (replaceByArve.Contains(item.Localisation))
-                {
-                    item.Localisation = "Arve";
-                }
-            }
 
-            return records;
+                var csv = new CsvReader(reader);
+                csv.Configuration.IgnoreBlankLines = true;
+                csv.Configuration.TrimOptions = CsvHelper.Configuration.TrimOptions.InsideQuotes;
+                csv.Configuration.Delimiter = ";";
+                csv.Configuration.PrepareHeaderForMatch = header => header.ToLower();
+                csv.Configuration.RegisterClassMap<OrderMap>();
+
+                var records = csv.GetRecords<Order>().ToList();
+
+                var replaceByArve = new[] { "BFS", "Anthropologie", "CUI", "Math", "ISE" };
+
+                foreach (var item in records)
+                {
+                    if (item.Localisation == "BFM")
+                    {
+                        item.Localisation = "CMU";
+                    }
+                    else if (replaceByArve.Contains(item.Localisation))
+                    {
+                        item.Localisation = "Arve";
+                    }
+                }
+
+                return records;
+            }
         }
 
         private static void CreateWorkbook(string filename, string key, IList<Order> orders, DateTime startDate, DateTime endDate)
@@ -67,7 +100,7 @@ namespace Openillink.InvoiceGenerator
 
             AddOrdersWorksheet(wb.AddWorksheet(key), orders);
 
-            var groups = orders.GroupBy(o => o.InvoiceAccount);
+            var groups = orders.GroupBy(o => o.InvoiceAccount, StringComparer.InvariantCultureIgnoreCase);
 
             foreach (var item in groups.Where(g => !string.IsNullOrEmpty(g.Key)).OrderBy(g => g.Key))
             {

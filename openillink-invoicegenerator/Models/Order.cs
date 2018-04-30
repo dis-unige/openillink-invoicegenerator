@@ -1,217 +1,115 @@
-﻿using FileHelpers;
-using System;
-using Openillink.InvoiceGenerator.Helpers;
+﻿using System;
 
 namespace Openillink.InvoiceGenerator.Models
 {
-    [DelimitedRecord(";")]
-    [IgnoreFirst(3)]
-    [IgnoreEmptyLines]
     public class Order
     {
-        [FieldQuoted]
-        public long IlLinkId;
+        public long IlLinkId { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Stade;
+        public string Stade { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Localisation;
+        public string Localisation { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string LieuRetrait;
+        public string LieuRetrait { get; set; }
 
-        [FieldValueDiscarded]
-        public string Sid;
+        public string Sid { get; set; }
 
-        [FieldValueDiscarded]
-        public string Pid;
+        public string Pid { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        public DateTime OrderDate;
+        public DateTime OrderDate { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        public DateTime? SendDate;
+        public DateTime? SendDate { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        public DateTime? BillingDate;
+        public DateTime? BillingDate { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-        public DateTime? RenewDate;
+        public DateTime? RenewDate { get; set; }
 
-        [FieldQuoted]
-        public int? Price;
+        public int? Price { get; set; }
 
-        [FieldValueDiscarded]
-        public string Prepaye;
+        public string Prepaye { get; set; }
 
-        [FieldValueDiscarded]
-        public string Ref;
+        public string Ref { get; set; }
 
-        [FieldValueDiscarded]
-        public string Arrivee;
+        public string Arrivee { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Name;
+        public string Name { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string FirstName;
+        public string FirstName { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Service;
+        public string Service { get; set; }
 
-        [FieldValueDiscarded]
-        public string CgrA;
+        public string CgrA { get; set; }
 
-        [FieldValueDiscarded]
-        public string CgrB;
+        public string CgrB { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        [FieldNotEmpty]
-        public string InvoiceGroup;
+        public string InvoiceGroup { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        [FieldNotEmpty]
-        public string InvoiceAccount;
+        public string InvoiceAccount { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string InvoiceOrigin;
+        public string InvoiceOrigin { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string EMail;
+        public string EMail { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Telephone;
+        public string Telephone { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Adresse;
+        public string Adresse { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string CodePostale;
+        public string CodePostale { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Localite;
+        public string Localite { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string DocumentType;
+        public string DocumentType { get; set; }
 
-        [FieldQuoted]
-        public int? Urgent;
+        public int? Urgent { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Envoi_Par;
+        public string Envoi_Par { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Title;
+        public string Title { get; set; }
 
-        [FieldQuoted]
-        public string Year;
+        public string Year { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Volume;
+        public string Volume { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Number;
+        public string Number { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Supplement;
+        public string Supplement { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Pages;
+        public string Pages { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string ArticleTitle;
+        public string ArticleTitle { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Authors;
+        public string Authors { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Edition;
+        public string Edition { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Isbn;
+        public string Isbn { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Issn;
+        public string Issn { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Eissn;
+        public string Eissn { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Doi;
+        public string Doi { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Uid;
+        public string Uid { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Remarks;
+        public string Remarks { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string RemarksPublic;
+        public string RemarksPublic { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string RemarksUser;
+        public string RemarksUser { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string History;
+        public string History { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string InputBy;
+        public string InputBy { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string Library;
+        public string Library { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string RefInterBib;
+        public string RefInterBib { get; set; }
 
-        [FieldQuoted]
-        [FieldConverter(typeof(StringConverter))]
-        public string PmId;
+        public string PmId { get; set; }
 
-        [FieldValueDiscarded]
-        public string IpAddress;
+        public string IpAddress { get; set; }
 
-        [FieldValueDiscarded]
-        public string Referer;
+        public string Referer { get; set; }
     }
 }
