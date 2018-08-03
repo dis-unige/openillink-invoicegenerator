@@ -42,19 +42,19 @@ namespace Openillink.InvoiceGenerator
             var records = engine.ReadFile(file)
                                 .Where(r => r.SendDate >= startDate && r.SendDate <= endDate).ToList();
 
-            var replaceByArve = new[] { "BFS", "Anthropologie", "CUI", "Math", "ISE" };
+            // var replaceByArve = new[] { "BFS", "Anthropologie", "CUI", "Math", "ISE" };
 
-            foreach (var item in records)
-            {
-                if (item.Localisation == "BFM")
-                {
-                    item.Localisation = "CMU";
-                }
-                else if (replaceByArve.Contains(item.Localisation))
-                {
-                    item.Localisation = "Arve";
-                }
-            }
+            // foreach (var item in records)
+            // {
+            // if (item.Localisation == "BFM")
+            // {
+            // item.Localisation = "CMU";
+            // }
+            // else if (replaceByArve.Contains(item.Localisation))
+            // {
+            // item.Localisation = "Arve";
+            // }
+            // }
 
             return records;
         }
@@ -238,38 +238,38 @@ namespace Openillink.InvoiceGenerator
         {
             index += 2;
 
-            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"CMU\")", lastDataRow);
-            sheet.Row(index).Cell(4).Value = "commandes CMU";
+            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"CMU\")+COUNTIF(H:H,\"CMU_AZ\")+COUNTIF(H:H,\"CMU_UNIGE\")+COUNTIF(H:H,\"CMU_DBU\")+COUNTIF(H:H,\"CMU_HUG\")+COUNTIF(H:H,\"CMU_IEH2\")+COUNTIF(H:H,\"ARVE-UNIGE\")+COUNTIF(H:H,\"ARVE-BELS\")+COUNTIF(H:H,\"ARVE-CUI\")+COUNTIF(H:H,\"ARVE-DBU\")+COUNTIF(H:H,\"ARVE-ISE\")+COUNTIF(H:H,\"ARVE_AZ\")+COUNTIF(H:H,\"ARVE-MATH\")+COUNTIF(H:H,\"ARVE-OBS\")+COUNTIF(H:H,\"ARVE-TERRE\")+COUNTIF(H:H,\"ARVE\")", lastDataRow);
+            sheet.Row(index).Cell(4).Value = "commandes UNIGE";
             sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
-            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"CMU\",G:G)", lastDataRow);
+            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"CMU\",G:G)+SUMIF(H:H,\"CMU_AZ\",G:G)+SUMIF(H:H,\"CMU_UNIGE\",G:G)+SUMIF(H:H,\"CMU_DBU\",G:G)+SUMIF(H:H,\"CMU_HUG\",G:G)+SUMIF(H:H,\"CMU_IEH2\",G:G)+SUMIF(H:H,\"ARVE-UNIGE\",G:G)+SUMIF(H:H,\"ARVE-BELS\",G:G)+SUMIF(H:H,\"ARVE-CUI\",G:G)+SUMIF(H:H,\"ARVE-DBU\",G:G)+SUMIF(H:H,\"ARVE-ISE\",G:G)+SUMIF(H:H,\"ARVE_AZ\",G:G)+SUMIF(H:H,\"ARVE-MATH\",G:G)+SUMIF(H:H,\"ARVE-OBS\",G:G)+SUMIF(H:H,\"ARVE-TERRE\",G:G)+SUMIF(H:H,\"ARVE\",G:G)", lastDataRow);
 
             index++;
 
-            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"IDS*\")+COUNTIF(H:H,\"NEBIS*\")+COUNTIF(H:H,\"ILLRERO*\")+COUNTIF(H:H,\"Autre Suisse\")+COUNTIF(H:H,\"BNS\")", lastDataRow);
+            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"CMU_GE\")+COUNTIF(H:H,\"CMU_AUTRESUISSE\")+COUNTIF(H:H,\"CMU_IDS\")+COUNTIF(H:H,\"CMU_ILLRERO\")+COUNTIF(H:H,\"CMU_NEBIS\")+COUNTIF(H:H,\"CMU_RENOUVAUD\")+COUNTIF(H:H,\"CMU_NEBIS\")+COUNTIF(H:H,\"ARVE-GE\")+COUNTIF(H:H,\"ARVE_AUTRESUISSE\")+COUNTIF(H:H,\"ARVE-IDS\")+COUNTIF(H:H,\"ARVE-ILLRERO\")+COUNTIF(H:H,\"ARVE-NEBIS\")+COUNTIF(H:H,\"ARVE-RENOUVAUD\")", lastDataRow);
             sheet.Row(index).Cell(4).Value = "commandes Suisse";
             sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
-            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"IDS*\",G:G)+SUMIF(H:H,\"NEBIS*\",G:G)+SUMIF(H:H,\"ILLRERO*\",G:G)+SUMIF(H:H,\"Autre Suisse\",G:G)+SUMIF(H:H,\"BNS\",G:G)", lastDataRow);
+            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"CMU_GE\",G:G)+SUMIF(H:H,\"CMU_AUTRESUISSE\",G:G)+SUMIF(H:H,\"CMU_IDS\",G:G)+SUMIF(H:H,\"CMU_ILLRERO\",G:G)+SUMIF(H:H,\"CMU_NEBIS\",G:G)+SUMIF(H:H,\"CMU_RENOUVAUD\",G:G)+SUMIF(H:H,\"CMU_NEBIS\",G:G)+SUMIF(H:H,\"ARVE-GE\",G:G)+SUMIF(H:H,\"ARVE_AUTRESUISSE\",G:G)+SUMIF(H:H,\"ARVE-IDS\",G:G)+SUMIF(H:H,\"ARVE-ILLRERO\",G:G)+SUMIF(H:H,\"ARVE-NEBIS\",G:G)+SUMIF(H:H,\"ARVE-RENOUVAUD\",G:G)", lastDataRow);
 
             index++;
 
-            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"SUBITO\")", lastDataRow);
-            sheet.Row(index).Cell(4).Value = "commandes Subito (All.)";
-            sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
-            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"SUBITO\",G:G)", lastDataRow);
+            // sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"SUBITO\")", lastDataRow);
+            // sheet.Row(index).Cell(4).Value = "commandes Subito (All.)";
+            // sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
+            // sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"SUBITO\",G:G)", lastDataRow);
+            // 
+            // index++;
 
-            index++;
-
-            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"NLM\")+COUNTIF(H:H,\"AutreEtranger\")+COUNTIF(H:H,\"BritishLibrary\")+COUNTIF(H:H,\"SUDOC\")", lastDataRow);
+            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"CMU_ETRANGER\")+COUNTIF(H:H,\"CMU_BL\")+COUNTIF(H:H,\"CMU_NLM\")+COUNTIF(H:H,\"CMU_SUBITO\")+COUNTIF(H:H,\"CMU_SUDOC\")+COUNTIF(H:H,\"ARVE-ETRANGER\")+COUNTIF(H:H,\"ARVE-NLM\")+COUNTIF(H:H,\"ARVE-SUBITO\")+COUNTIF(H:H,\"ARVE-SUDOC\")", lastDataRow);
             sheet.Row(index).Cell(4).Value = "commandes Etranger";
             sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
-            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"NLM\",G:G)+SUMIF(H:H,\"AutreEtranger\",G:G)+SUMIF(H:H,\"BritishLibrary\",G:G)+SUMIF(H:H,\"SUDOC\",G:G)", lastDataRow);
+            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"CMU_ETRANGER\",G:G)+SUMIF(H:H,\"CMU_BL\",G:G)+SUMIF(H:H,\"CMU_NLM\",G:G)+SUMIF(H:H,\"CMU_SUBITO\",G:G)+SUMIF(H:H,\"CMU_SUDOC\",G:G)+SUMIF(H:H,\"ARVE-ETRANGER\",G:G)+SUMIF(H:H,\"ARVE-NLM\",G:G)+SUMIF(H:H,\"ARVE-SUBITO\",G:G)+SUMIF(H:H,\"ARVE-SUDOC\",G:G)", lastDataRow);
 
             index++;
 
-            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"Gallica\")+COUNTIF(H:H,\"Open Access\")", lastDataRow);
+            sheet.Row(index).Cell(3).FormulaR1C1 = string.Format("=COUNTIF(H:H,\"CMU_OA\")+COUNTIF(H:H,\"ARVE_OA\")", lastDataRow);
             sheet.Row(index).Cell(4).Value = "Open Access online";
             sheet.Row(index).Cell(7).Style.NumberFormat.Format = "#,##0.00";
-            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"Gallica\",G:G)+SUMIF(H:H,\"Open Access\",G:G)", lastDataRow);
+            sheet.Row(index).Cell(7).FormulaR1C1 = string.Format("=SUMIF(H:H,\"CMU_OA\",G:G)+SUMIF(H:H,\"ARVE_OA\",G:G)", lastDataRow);
 
             sheet.Row(index).Cells(3, 7).Style.Border.BottomBorder = XLBorderStyleValues.Thick;
 
