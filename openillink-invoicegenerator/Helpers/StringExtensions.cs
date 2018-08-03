@@ -7,7 +7,7 @@ namespace Openillink.InvoiceGenerator.Helpers
         public static string FixEncoding(this string input)
         {
             var srcEncoding = Encoding.UTF8;
-            var destEncoding = Encoding.GetEncoding("iso-8859-1");
+            var destEncoding = Encoding.UTF8;
 
             var result = Encoding.Convert(srcEncoding, destEncoding, srcEncoding.GetBytes(input));
 
